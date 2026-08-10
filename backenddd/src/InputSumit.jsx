@@ -14,8 +14,6 @@ export default function InputSumit({ addRow }) {
     const navigate = useNavigate();
 
 
-    const [clicks, setClicks] = useState([]);
-    // state to keep track of all submitted entries locally 
 
     function readIt(event) {
         setMajorr(event.target.value);
@@ -39,35 +37,11 @@ export default function InputSumit({ addRow }) {
     }
 
     function handleSubmit() {
-        setClicks([...clicks, { majorr, namee, subjectt }]);
-        addRow(namee, majorr, subjectt);
+        addRow(namee, majorr, subjectt); //send it too add-row to backend so it can be saved
         navigate("/MainPg"); // This automaticly send the user to MainPg. 
     }
 
-    const [rows, setRows] = useState([]);
-    // state to store the rows fetched from the backend
 
-    useEffect(() => { 
-        // Fetch data from backend once when component mounts
-        async function fetchData() { 
-            // Tells js: “This function will do something that takes time (like fetching data),
-            // and I want to wait for it without freezing everything else.”
-        
-            const response = await fetch("http://127.0.0.1:8000/check-db"); 
-            // Send the request to my backend and await response
-        
-            const data = await response.json(); 
-            // Convert it from JSON text → JavaScript object
-            setRows(data.rows);
-            // Save fetched rows in state
-        }
-        fetchData();
-        // Calls the fetchData function immediately. triggers network request and updates the state.
-    }, []); 
-    // [] means: run this effect once, when the component mounts.
-    
-    // The bigger picture: “When the App component loads, it sends one request to /check-db,
-    // gets the data returned, and stores it in state so the UI can show it.”
 
     return (
         <div className="min-h-screen bg-gray-900 text-gray-200 p-15 flex flex-col items-center">
@@ -130,16 +104,6 @@ export default function InputSumit({ addRow }) {
                 </button>
             </div>
             
-
-            {/* <div className="mt-8 w-full max-w-md space-y-4"> 
-                {clicks.map((click, index) => (
-                    <div key={index} className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                        <div><span className="font-semibold">Name:</span> {click.namee}</div>
-                        <div><span className="font-semibold">Major:</span> {click.majorr}</div>
-                        <div><span className="font-semibold">Subject:</span> {click.subjectt}</div>
-                    </div>
-                ))}
-            </div> */}
         </div>
     );
 }

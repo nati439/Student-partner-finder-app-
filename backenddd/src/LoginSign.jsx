@@ -59,6 +59,7 @@ export default function LoginSign() {
     };
 
     const handleCLick2 = async (e) => {
+        
         e.preventDefault(); //I explain it above 
 
         const res2 = await fetch("http://127.0.0.1:8000/auth/login", {
@@ -68,6 +69,8 @@ export default function LoginSign() {
         });
 
         const data2 = await res2.json();
+        localStorage.setItem("user_id", data2.user_id);//////
+        localStorage.setItem("username", data2.username);///////
         Setlogin(data2); // ✅ store the response
         setLoginTried(true);
     }

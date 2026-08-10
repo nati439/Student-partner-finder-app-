@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logo from "./assets/logo.jpg";
 import "./Header.css";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
@@ -10,7 +11,7 @@ function Header(){
     return(
         <div className='header'>
             <IconButton>
-                <PersonIcon className="header__icon" fontSize='large'/>
+                <Link to="/MainPg"><PersonIcon className="header__icon" fontSize='large'/> </Link>
             </IconButton>
             <img className='header__logo' src={logo} alt='logo picture'/>
 

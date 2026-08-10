@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
 export default function TheMainPg(){
+    
     const [pfp, Setpfp] = useState("");
     const [username, Setusername] = useState("");
     const [college, Setcollege] = useState("");
@@ -16,32 +17,176 @@ export default function TheMainPg(){
     const [time, Settime] = useState("");
     const [contact, Setcontact] = useState("");
 
-    const [subimt, Setsubimt] = useState([]);
+    // const [subimt, Setsubimt] = useState([]);
+    const [user, Setuser] = useState({});
+    const [subjects, Setsubjects] = useState({});
+    const [times, Settimes] = useState({});
+    
     //two goals: 1. send quick messege saying it's updated 2. clear everything you wrote in the text-box
     //1. if not null do this - i want it to go away after 5 seconds - click --> not null --> messege
     //2. 
     const [showMsg, setShowMsg] = useState(false);
 
-    function uploadpfp(event){
+   function uploadpfp(event){
         const file = event.target.files[0];
         if (!file) return;
-        // optional: only allow images (kept minimal as requested)
         if (!file.type.startsWith("image/")) return;
-        Setpfp(URL.createObjectURL(file));
+
+        const formData = new FormData();
+        //Think of this as an empty box that can hold data.
+        formData.append("file", file);
+    
+        //You’re adding something into the box. the key and the actual file object
+
+        fetch("http://127.0.0.1:8000/upload/", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            // console.log("Permanent URL:", data.url);
+            Setpfp(data.url); // ✅ store the permanent URL
+        })
+        .catch(err => console.error("Upload failed:", err));
     }
 
-    useEffect(() => {
-        if (subimt.length > 0) {
-            setShowMsg(true);
 
-            const timer = setTimeout(() => {
+
+    //every time page re-render send data to backend 
+    // useEffect 
+    // fetch 
+    // Add the fetch value to the usestate. The one that supposed to hold the value when first user get to website and put there info 
+    
+
+
+    //It stores a value in the browser so it doesn’t disappear when you refresh
+
+        useEffect(() => {
+            // console.log("🔥 useEffect started");
+
+            // const username = localStorage.getItem("username");
+            // const college = localStorage.getItem("college");
+
+           
+//"http://127.0.0.1:8000/retrieve"
+            // if (!username) {
+            //     console.log("⛔ No username found — stopping fetch");
+            //     return;
+            // }
+
+            // if (!college) {
+            //     console.log("⛔ No username found — stopping fetch");
+            //     return;
+            // }
+            
+
+            async function fetchdata() {
+                console.log("📡 Fetching user:", username);
+
+                const res = await fetch(`http://127.0.0.1:8000/users/${username}`);
+                console.log("📥 Response status:", res.status);
+
+                const data = await res.json();
+                console.log("📦 Data received:", data);
+
+                Setcollege(data.college);
+                Setcontact(data.contact);
+                Setnote(data.note);
+                Setday(data.day);
+                Setpfp(data.pfp);
+                Setsubject(data.subject);
+                Setusername(data.username);
+                Setyear(data.year);
+                Settime(data.time);
+                Setmajor(data.major);
+
+                console.log("✅ State updated");
+            }
+
+            fetchdata();
+        }, []);
+
+        //useeffect 
+        // send fetch at /retrieve?major=something
+        //make it run every time major change
+        
+        // useEffect (() => {
+        //     async function getmajor(){
+        //         const getdata = await fetch(`http://127.0.0.1:8000/matching/${major}`)
+                
+        //     }
+
+        //     getmajor();
+        // }, [])
+
+        // useEffect(() => {
+        //     console.log("STORED USERNAME:", localStorage.getItem("username"));
+
+        //     const username = localStorage.getItem("username");
+
+        //     if (!username) return;
+
+        //     // fetch here...
+        // }, []);
+            
+   //It’s wrong because it fires on any small change instead of a deliberate submit action, which leads to unintended requests.
+// Here’s your **full corrected version with only necessary fixes applied** (no restructuring, just fixes):
+
+
+useEffect(() => {
+    console.log("STATE user:", user);
+    console.log("STATE subject:", subject);
+    console.log("STATE time:", time);
+}, [user, subject, time]);
+
+
+    function dmessege(){
+        setShowMsg(true);
+        const timer = setTimeout(() => {
             setShowMsg(false);
-            }, 3000);
+        }, 3000);
 
-            return () => clearTimeout(timer); //Clear the messge after 5 second which means 2000 
-        }
-    }, [subimt]); //First this runs after first render, run whenever subimt changes.
+        return () => clearTimeout(timer);
+    }
+    
 
+    // useEffect(() => {
+    //     const payload = {}
+    //     if (subimt.length > 0) {
+    //         setShowMsg(true);
+
+    //         const timer = setTimeout(() => {
+    //         setShowMsg(false);
+    //         }, 3000);
+
+    //         return () => clearTimeout(timer); //Clear the messge after 5 second which means 2000 
+    //     }
+    // }, [subimt]); //First this runs after first render, run whenever subimt changes.
+
+    // useEffect(() =>  {
+    //     async function fetchData(){
+    //         if(subimt.length > 0){
+    //             const thedate = await fetch("http://127.0.0.1:8000/tinder" ,{
+    //                 method: "POST",
+    //                 headers: {"Content-Type": "application/json"},
+    //                 body: JSON.stringify({subimt})
+    //             });
+
+    //             const thejson = await thedate.json();
+
+                
+                
+                
+    //         }
+    //     }
+
+    //     fetchData()
+       
+    // },[subimt])
+    // console.log("pfp:", pfp);
+
+
+    localStorage.setItem("major", major);
     return(
         <>
             {/* Full-screen background and central layout */}
@@ -163,6 +308,8 @@ export default function TheMainPg(){
                                                 focus:border-black'
                                         value={username}
                                         onChange={(e) => Setusername(e.target.value)}
+                                        
+
                                     />
 
                                     <input
@@ -240,19 +387,51 @@ export default function TheMainPg(){
                 <div className="fixed inset-x-0 right-40 bottom-6 flex justify-center md:justify-end md:pr-10 z-20"> 
                     {/*inset-x-0 means right-0 and left-0 so it's fully stretch on left and right side*/}
                     {/*md means this rule only apply to medium and large screen*/}
-                    <button
-                        className='text-white text-[20px] md:text-[28px] bg-black p-4 md:p-6 rounded-full shadow-lg'
+                   <button
                         onClick={() => {
-                            //The code below this check if any of my values have a letter inside them if yes it show the messege it has been updated.
-                            if (pfp.length > 0 || username.length > 0  || college.length > 0 || year.length > 0 || major.length > 0  || subject.length > 0  || note.length > 0  || day.length > 0  || time.length > 0  || contact.length > 0 ){
-                                Setsubimt(prev => [...prev, {pfp,username,college, year, major, subject, note, day, time, contact} ])
+
+                            localStorage.setItem("username", username);
+                            localStorage.setItem("college", college);
+                            localStorage.setItem("year", year);
+
+
+                            dmessege();
+
+                            if (pfp.length > 0 || username.length > 0 || college.length > 0 || year.length > 0) {
+                            Setuser({ pfp, username, college, year });
                             }
+
+                            if (major.length > 0 || subject.length > 0 || note.length > 0) {
+                            Setsubjects({ major, subject, note });
+                            }
+
+                            if (day.length > 0 || time.length > 0 || contact.length > 0) {
+                            Settimes({ day, time, contact });
+                            }
+
+                            // ✅ ADD THIS HERE
+                            const payload = {
+                            user: { pfp, username, college, year },
+                            subject: { major, subject, note },
+                            time: { day, time, contact },
+                            };
+
+                            fetch("http://127.0.0.1:8000/tinder", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload),
+                            })
+                            .then(res => res.json())
+                            .then(data => console.log("Server response:", data))
+                            .catch(err => console.error(err));
+                           
+
                         }}
-                    >
+                        >
                         Save
                     </button>
+                    <Link to="/TinderCards"><button>Next</button></Link>
                 </div>
-
                 <Link classame='text-red-500 absolute z-1 md:text-[40px] right-50 top-120 fixed bg-black p-4 rounded-full' to="/RealMain"> Next </Link>
                 
             
@@ -267,3 +446,4 @@ export default function TheMainPg(){
         </>
     )
 }
+
