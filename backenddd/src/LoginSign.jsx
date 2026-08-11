@@ -55,7 +55,7 @@ export default function LoginSign() {
         Setsign(data);
 
         // navigate after successful signup
-        navigate("/start");
+        navigate("/MainPg");
     };
 
     const handleCLick2 = async (e) => {

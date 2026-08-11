@@ -58,7 +58,6 @@ function App(){
           <Route path="/" element={<RealLandPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contectpg/>}/>
-          <Route path="/start" element={<InputSumit addRow={addRow} />} />
           <Route path="/LoginSign" element={<LoginSign/>}/>
           <Route path="/MainPg" element={<TheMainPg/>}/>
           <Route path="/RealMain" element={<RealMain/>}/>  

@@ -108,5 +108,6 @@ async def login(login_request: LoginRequest, db=Depends(get_db)): #Create an asy
 
     token = create_access_token(db_username, user_id, timedelta(minutes=20))
     #Generate a JWT access token valid for 20 minutes.
-    return {"access_token": token, "token_type": "bearer"} #this create JWT to the client
+    #######return {"access_token": token, "token_type": "bearer"} #this create JWT to the client
+    return {"access_token": token, "token_type": "bearer", "user_id": user_id, "username": db_username}
 
