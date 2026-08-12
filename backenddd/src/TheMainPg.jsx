@@ -3,6 +3,9 @@ import mainpg from './assets/mainbg.jpg';
 import whitebg from './assets/white.jpg';
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import { tinderfetch } from './api/Profile';
+//b/c tinderfetch is a export function. you can do this to use it in here
+
 
 export default function TheMainPg(){
     
@@ -81,13 +84,13 @@ export default function TheMainPg(){
             
 
             async function fetchdata() {
-                console.log("📡 Fetching user:", username);
+                // console.log("📡 Fetching user:", username);
 
-                const res = await fetch(`http://127.0.0.1:8000/users/${username}`);
-                console.log("📥 Response status:", res.status);
+                // const res = await fetch(`http://127.0.0.1:8000/users/${username}`);
+                // console.log("📥 Response status:", res.status);
 
-                const data = await res.json();
-                console.log("📦 Data received:", data);
+                // const data = await res.json();
+                // console.log("📦 Data received:", data);
 
                 Setcollege(data.college);
                 Setcontact(data.contact);
@@ -133,11 +136,11 @@ export default function TheMainPg(){
 // Here’s your **full corrected version with only necessary fixes applied** (no restructuring, just fixes):
 
 
-useEffect(() => {
-    console.log("STATE user:", user);
-    console.log("STATE subject:", subject);
-    console.log("STATE time:", time);
-}, [user, subject, time]);
+// useEffect(() => {
+//     console.log("STATE user:", user);
+//     console.log("STATE subject:", subject);
+//     console.log("STATE time:", time);
+// }, [user, subject, time]);
 
 
     function dmessege(){
@@ -409,21 +412,36 @@ useEffect(() => {
                             Settimes({ day, time, contact });
                             }
 
-                            // ✅ ADD THIS HERE
+                            //payload --> helper function (profile.js) --> get responses it worked
                             const payload = {
-                            user: { pfp, username, college, year },
-                            subject: { major, subject, note },
-                            time: { day, time, contact },
+                                user: { pfp, username, college, year },
+                                subject: { major, subject, note },
+                                time: { day, time, contact },
                             };
 
-                            fetch("http://127.0.0.1:8000/tinder", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(payload),
-                            })
-                            .then(res => res.json())
-                            .then(data => console.log("Server response:", data))
-                            .catch(err => console.error(err));
+                            
+
+                            tinderfetch(payload) 
+
+                            async function readTinder() {
+                                const store = await tinderfetch(payload);
+
+                                console.log(store);
+                                //the message you're seeing in console.log(store) is the message/data that your backend wrote in its return
+                            }
+                                                            
+                            
+
+
+
+                            // fetch("http://127.0.0.1:8000/tinder", {
+                            // method: "POST",
+                            // headers: { "Content-Type": "application/json" },
+                            // body: JSON.stringify(payload),
+                            // })
+                            // .then(res => res.json())
+                            // .then(data => console.log("Server response:", data))
+                            // .catch(err => console.error(err));
                            
 
                         }}
