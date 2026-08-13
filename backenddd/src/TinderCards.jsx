@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useLongPoll } from "./useLongPoll";
 import {Sendswipe} from './api/swipe';
 import { Getmatchingpeople } from "./api/swipe";
+import {ProfileCards} from "./cmp/ProfileCards"
 function TinderCards() {
     const [people, setPeople] = useState([]);
     const [lastSwipe, setLastSwipe] = useState(null); 
@@ -79,9 +80,9 @@ function TinderCards() {
                             style={{ backgroundImage: `url(${person.pfp})` }} 
                             className="card"
                         >
-                            <h3>{person.username}</h3>
-                            <p>{person.college}</p>
-                            <p>{person.year}</p>
+                            <div><ProfileCards person={person} /></div> 
+                            {/* tells React to render the component with person as a prop. We just telling react to treat this as React component.*/}
+                           
                         </div>
 
                         <div className="buttons">

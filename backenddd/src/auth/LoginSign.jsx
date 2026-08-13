@@ -82,16 +82,14 @@ export default function LoginSign() {
                 {/* Login Section */}
                 <div className="absolute top-20 left-100 text-white flex flex-col space-y-4">
                     <h1 className="text-4xl p-5">Login</h1>
-                    <input 
+                    <Input
                         type="text"
-                        className="p-4 rounded bg-gray-800 text-white placeholder-gray-400"
                         placeholder="Username"
                         value={lusername}
                         onChange={(e) => Setlusername(e.target.value)}
                     />
-                    <input 
+                    <Input
                         type="password"
-                        className="p-4 rounded bg-gray-800 text-white placeholder-gray-400"
                         placeholder="Password"
                         value={lpassword}
                         onChange={(e) => Setlpassword(e.target.value)}
@@ -108,16 +106,14 @@ export default function LoginSign() {
                 {/* Signup Section */}
                 <div className="absolute top-20 right-100 text-white flex flex-col space-y-4">
                     <h1 className="text-4xl p-5">Create Account</h1>
-                    <input 
+                    <Input
                         type="text"
-                        className="p-4 rounded bg-gray-800 text-white placeholder-gray-400"
                         placeholder="Username"
                         value={susername}
                         onChange={(e) => Setsusername(e.target.value)}
                     />
-                    <input 
+                    <Input
                         type="password"
-                        className="p-4 rounded bg-gray-800 text-white placeholder-gray-400"
                         placeholder="Password"
                         value={spassword}
                         onChange={(e) => Setspassword(e.target.value)}
