@@ -3,7 +3,8 @@ import TinderCard from "react-tinder-card";
 import './tinder.css';
 import { Link } from "react-router-dom";
 import { useLongPoll } from "./useLongPoll";
-
+import {Sendswipe} from './api/swipe';
+import { Getmatchingpeople } from "./api/swipe";
 function TinderCards() {
     const [people, setPeople] = useState([]);
     const [lastSwipe, setLastSwipe] = useState(null); 
@@ -13,7 +14,7 @@ function TinderCards() {
     // get user id from localStorage
     const userId = localStorage.getItem("user_id"); 
 
-    // listen for match notifications
+    // "Use my useLongPoll helper to keep checking the backend for a new message, and give me whatever message it finds."
     const message = useLongPoll(`http://127.0.0.1:8000/poll/${userId}`);
 
     // when a match comes in, show it
@@ -30,33 +31,25 @@ function TinderCards() {
 
         async function dbback() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/matching/${major}`);
-                const json = await response.json();
-                const data = json.users ? json.users : json;
+                const data = await Getmatchingpeople(major);
                 setPeople(data);
             } catch (err) {
-                console.error("Fetch error:", err);
+                console.error(err);
             }
         }
         dbback();
     }, []);
 
-    async function handleSwipe(direction, person) {
+    async function handleSwipe(direction, person, userId) {
         setLastSwipe({ username: person.username, direction });
 
-        // only send to backend if swiped right
-        if (direction === "right") {
-            await fetch("http://127.0.0.1:8000/swipe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    swiper_id: Number(userId),
-                    swiped_id: person.id, // make sure your person object has an id
-                    direction: "right"
-                })
-            });
-        }
+        
+             Sendswipe(direction, person, userId)
+        
+       
+        
     }
+    
 
     return (
         <div className="tinderCards">
@@ -77,8 +70,9 @@ function TinderCards() {
                     <TinderCard
                         className="swipe" 
                         key={person.username}
+                        //change username to id
                         preventSwipe={["up", "down"]}
-                        onSwipe={(dir) => handleSwipe(dir, person)}
+                        onSwipe={(dir) => handleSwipe(dir, person, userId)}
                         onCardLeftScreen={() => setLastLeft(person.username)}
                     >
                         <div 
