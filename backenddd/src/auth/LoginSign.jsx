@@ -4,6 +4,7 @@ import lightoff from './assets/lightoff.jpg';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React from 'react'
+import {login} from '../api/Auth'
 
 export default function LoginSign() {
     const [lusername, Setlusername] = useState("");
@@ -56,18 +57,16 @@ export default function LoginSign() {
         navigate("/MainPg");
     };
 
+
     const handleCLick2 = async (e) => {
         
         e.preventDefault(); //I explain it above 
 
-        const res2 = await fetch(//a file here, 
-            {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: lusername, password: lpassword })
-        });
+        
 
-        const data2 = await res2.json();
+        const data2 = await login(lusername, lpassword);
+        //Auth/login 
+
         localStorage.setItem("user_id", data2.user_id);//////
         localStorage.setItem("username", data2.username);///////
         Setlogin(data2);    // ✅ store the response
