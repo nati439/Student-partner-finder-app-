@@ -6,6 +6,7 @@ import { useLongPoll } from "./useLongPoll";
 import {Sendswipe} from './api/swipe';
 import { Getmatchingpeople } from "./api/swipe";
 import {ProfileCards} from "./cmp/ProfileCards"
+import {SwipeCard} from './cmp/SwipeCard'
 function TinderCards() {
     const [people, setPeople] = useState([]);
     const [lastSwipe, setLastSwipe] = useState(null); 
@@ -68,32 +69,9 @@ function TinderCards() {
 
             <div className="tinderCards__cardContainer">
                 {people.map((person) => (
-                    <TinderCard
-                        className="swipe" 
-                        key={person.username}
-                        //change username to id
-                        preventSwipe={["up", "down"]}
-                        onSwipe={(dir) => handleSwipe(dir, person, userId)}
-                        onCardLeftScreen={() => setLastLeft(person.username)}
-                    >
-                        <div 
-                            style={{ backgroundImage: `url(${person.pfp})` }} 
-                            className="card"
-                        >
-                            <div><ProfileCards person={person} /></div> 
-                            {/* tells React to render the component with person as a prop. We just telling react to treat this as React component.*/}
-                           
-                        </div>
+                    
+                        <div key={person.id}>  <SwipeCard person={person}  lastSwipe={lastSwipe} handleSwipe={handleSwipe} setLastLeft={setLastLeft} userId={userId}/></div>
 
-                        <div className="buttons">
-                            {lastSwipe?.username === person.username && lastSwipe?.direction === "left" && (
-                                <span className="x">❌</span>
-                            )}
-                            {lastSwipe?.username === person.username && lastSwipe?.direction === "right" && (
-                                <span className="check">✔️</span>
-                            )}
-                        </div>
-                    </TinderCard>
                 ))}
             </div>
         </div>
