@@ -4,6 +4,7 @@ import whitebg from './assets/white.jpg';
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { tinderfetch } from './api/Profile';
+import { uploadpfps } from './api/Profile';
 //b/c tinderfetch is a export function. you can do this to use it in here
 
 
@@ -32,25 +33,7 @@ export default function TheMainPgs(){
 
    function uploadpfp(event){
         const file = event.target.files[0];
-        if (!file) return;
-        if (!file.type.startsWith("image/")) return;
-
-        const formData = new FormData();
-        //Think of this as an empty box that can hold data.
-        formData.append("file", file);
-    
-        //You’re adding something into the box. the key and the actual file object
-
-        fetch("http://127.0.0.1:8000/upload/", {
-            method: "POST",
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            // console.log("Permanent URL:", data.url);
-            Setpfp(data.url); // ✅ store the permanent URL
-        })
-        .catch(err => console.error("Upload failed:", err));
+        uploadpfps(file)
     }
 
 

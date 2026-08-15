@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { useLongPoll } from "./useLongPoll";
 import {Sendswipe} from './api/swipe';
 import { Getmatchingpeople } from "./api/swipe";
-import {ProfileCards} from "./cmp/ProfileCards"
-import {SwipeCard} from './cmp/SwipeCard'
+import ProfileCards from "./cmp/ProfileCards"
+import SwipeCard from "./cmp/SwipeCard"
 function TinderCards() {
     const [people, setPeople] = useState([]);
     const [lastSwipe, setLastSwipe] = useState(null); 
@@ -43,13 +43,12 @@ function TinderCards() {
     }, []);
 
     async function handleSwipe(direction, person, userId) {
-        setLastSwipe({ username: person.username, direction });
-
-        
-             Sendswipe(direction, person, userId)
-        
-       
-        
+    setLastSwipe({ username: person.username, direction });
+        try {
+            await Sendswipe(direction, person, userId);
+        } catch (err) {
+            console.error(err);
+        }
     }
     
 

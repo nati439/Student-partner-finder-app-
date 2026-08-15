@@ -4,7 +4,7 @@
 // This file just pulls them out into reusable functions:
 
 //change into profile/TheMainPgs
-
+const BASE_URL = import.meta.env.VITE_API_URL;
 
     
       
@@ -13,8 +13,7 @@
         //1. if not null do this - i want it to go away after 5 seconds - click --> not null --> messege
         //2. 
        
-       export function uploadpfp(file){
-            const file = event.target.files[0];
+       export function uploadpfps(file){
             if (!file) return;
             if (!file.type.startsWith("image/")) return;
     
@@ -38,12 +37,11 @@
             })
             .catch(err => console.error("Upload failed:", err));
         }
-        
+        /////////////////////////////////////////////////
                     //helper function to bring user info back to frontend so it can be shown in profile place
-                    export async function fetchdata() {
-                        console.log("📡 Fetching user:", username);
+                    export async function fetchdata(id) {
         
-                        const res = await fetch(`http://127.0.0.1:8000/users/${}`);
+                        const res = await fetch(`${BASE_URL}/users`);
                         //after you create useContext use it inside the $(). The id. 
                         //change the url into the function you created 
         
@@ -53,7 +51,7 @@
                        
                     }
 
-        
+       ///////////////////////////////// 
                     
 
 

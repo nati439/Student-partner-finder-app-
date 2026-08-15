@@ -1,6 +1,6 @@
 //login and sigin 
 import { useEffect, useState } from "react";
-import lightoff from './assets/lightoff.jpg';
+import lightoff from '../assets/lightoff';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React from 'react'
@@ -63,15 +63,22 @@ export default function LoginSign() {
         e.preventDefault(); //I explain it above 
 
         
-
-        const data2 = await login(lusername, lpassword);
-        //Auth/login 
-
-        localStorage.setItem("user_id", data2.user_id);//////
-        localStorage.setItem("username", data2.username);///////
-        Setlogin(data2);    // ✅ store the response
-        setLoginTried(true);
+        try{
+            const data2 = await login(lusername, lpassword);
+               localStorage.setItem("user_id", data2.user_id);//////
+                localStorage.setItem("username", data2.username);///////
+                Setlogin(data2);    // ✅ store the response
+        }catch(err){
+            console.err(err)
+        } finally{
+               setLoginTried(true);
         //without this the error will appear all the time.
+        }
+        
+   
+
+     
+     
     }
   return (
         <div className="relative w-full h-screen">
