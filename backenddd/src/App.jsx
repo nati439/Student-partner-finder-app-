@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { useLongPoll } from "./useLongPoll";
 import RealLandPage from "./landingPage/realLandPage";
 import Contectpg from "./landingPage/contectpg";
@@ -12,6 +12,13 @@ import TinderCards from "./swipe/TinderCards";
 import {IdContext} from './context/AuthContext'
 
 function App(){
+  
+  const [id, setids] = useState("")
+  useEffect(() => {
+    const ids = localStorage.getItem("user_id")
+    setids(ids)
+  }, [])
+  
 //   const message = useLongPoll("http://localhost:8000/poll");
 //   const [input, setInput] = useState("");
 

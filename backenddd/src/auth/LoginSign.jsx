@@ -69,7 +69,7 @@ export default function LoginSign() {
                 localStorage.setItem("username", data2.username);///////
                 Setlogin(data2);    // ✅ store the response
         }catch(err){
-            console.err(err)
+            console.error(err)
         } finally{
                setLoginTried(true);
         //without this the error will appear all the time.
