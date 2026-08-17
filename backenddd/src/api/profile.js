@@ -2,7 +2,6 @@
 // from TheMainPg, fetching a user's data back, uploading a profile picture. Right now those 
 // three fetches (/tinder, /users/{username}, /upload/) are written inline inside TheMainPg.jsx.
 // This file just pulls them out into reusable functions:
-
 //change into profile/TheMainPgs
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -37,11 +36,11 @@ const BASE_URL = import.meta.env.VITE_API_URL;
             })
             .catch(err => console.error("Upload failed:", err));
         }
-        /////////////////////////////////////////////////
+        
                     //helper function to bring user info back to frontend so it can be shown in profile place
                     export async function fetchdata(id) {
         
-                        const res = await fetch(`${BASE_URL}/users`);
+                        const res = await fetch(`${BASE_URL}/users/${id}`);
                         //after you create useContext use it inside the $(). The id. 
                         //change the url into the function you created 
         
@@ -51,7 +50,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
                        
                     }
 
-       ///////////////////////////////// 
+        
                     
 
 

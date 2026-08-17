@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TinderCard from "react-tinder-card"; 
 import './tinder.css';
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import {Sendswipe} from './api/swipe';
 import { Getmatchingpeople } from "./api/swipe";
 import ProfileCards from "./cmp/ProfileCards"
 import SwipeCard from "./cmp/SwipeCard"
+import {IdContext} from '../context/AuthContext'
 function TinderCards() {
     const [people, setPeople] = useState([]);
     const [lastSwipe, setLastSwipe] = useState(null); 
@@ -14,7 +15,7 @@ function TinderCards() {
     const [matchNotif, setMatchNotif] = useState(null);
 
     // get user id from localStorage
-    const userId = localStorage.getItem("user_id"); 
+    const userId = useContext(IdContext); 
 
     // "Use my useLongPoll helper to keep checking the backend for a new message, and give me whatever message it finds."
     const message = useLongPoll(`http://127.0.0.1:8000/poll/${userId}`);

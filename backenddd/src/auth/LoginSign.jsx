@@ -5,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React from 'react'
 import {login} from '../api/Auth'
-
+import { signup } from "../api/Auth";
+const BASE_URL = import.meta.env.VITE_API_URL;
 export default function LoginSign() {
     const [lusername, Setlusername] = useState("");
     const [lpassword, Setlpassword] = useState("");
     const [susername, Setsusername] = useState("");
     const [spassword, Setspassword] = useState("");
 
-    const [login, Setlogin] = useState(null);  
+    const [logins, Setlogin] = useState(null);  
     // const [sign, Setsign] = useState([]); not necessary 
     const [loginTried, setLoginTried] = useState(false);
 
@@ -24,13 +25,13 @@ export default function LoginSign() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (login.access_token && login) {
+        if (logins && logins.access_token ) {
             navigate("/MainPg");
         }
-    }, [login]);
+    }, [logins]);
 
     const Ilogin = function() {
-        if (login && loginTried && !login.access_token) {
+        if (logins && loginTried && !logins.access_token) {
             // loginTried means user clicked login. Login means we received a response.
             return (
                 <div className="text-red-500 absolute top-96 right-225 z-10">
@@ -43,12 +44,7 @@ export default function LoginSign() {
         e.preventDefault(); 
             
 
-        const res = await fetch(//a file here, 
-            {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: susername, password: spassword })
-        });
+        signup(susername, spassword)
 
         const data = await res.json();
         // Setsign(data); not necessary  
