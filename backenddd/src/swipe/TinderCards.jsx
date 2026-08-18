@@ -7,7 +7,7 @@ import {Sendswipe} from './api/swipe';
 import { Getmatchingpeople } from "./api/swipe";
 import ProfileCards from "./cmp/ProfileCards"
 import SwipeCard from "./cmp/SwipeCard"
-import {IdContext} from '../context/AuthContext'
+import {IdContext} from '../cmp/AuthContext'
 function TinderCards() {
     const [people, setPeople] = useState([]);
     const [lastSwipe, setLastSwipe] = useState(null); 

@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import { tinderfetch } from './api/Profile';
 import { uploadpfps } from './api/Profile';
 //b/c tinderfetch is a export function. you can do this to use it in here
-
-
+import { IdContext } from '../cmp/AuthContext';
+const userId = useContext(IdContext);
+const BASE_URL = import.meta.env.VITE_API_URL;
 export default function TheMainPgs(){
     
     const [pfp, Setpfp] = useState("");
@@ -69,10 +70,10 @@ export default function TheMainPgs(){
             async function fetchdata() {
                 // console.log("📡 Fetching user:", username);
 
-                // const res = await fetch(`http://127.0.0.1:8000/users/${username}`);
+                const res = await fetch(`${BASE_URL}/users/${userId}`);
                 // console.log("📥 Response status:", res.status);
 
-                // const data = await res.json();
+                const data = await res.json();
                 // console.log("📦 Data received:", data);
 
                 Setcollege(data.college);

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React from 'react'
 import {login} from '../api/Auth'
+import Input from "@mui/material/Input";
 import { signup } from "../api/Auth";
 const BASE_URL = import.meta.env.VITE_API_URL;
 export default function LoginSign() {
@@ -43,14 +44,19 @@ export default function LoginSign() {
     const handleCLick = async (e) => {
         e.preventDefault(); 
             
+        try{
+            await signup(susername, spassword)
 
-        signup(susername, spassword)
+            // navigate after successful signup
+            navigate("/MainPg");
+        }catch(err){
+            console.error(err)
+        } 
 
-        const data = await res.json();
-        // Setsign(data); not necessary  
+        
+        
 
-        // navigate after successful signup
-        navigate("/MainPg");
+      
     };
 
 

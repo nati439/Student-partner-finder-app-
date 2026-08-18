@@ -9,7 +9,7 @@ import TheMainPg from "./profile/TheMainPgs";
 import RealMain from "./RealMainpg";
 import Header from "./Header";
 import TinderCards from "./swipe/TinderCards";
-import {IdContext} from './context/AuthContext'
+import {IdContext} from './cmp/AuthContext'
 
 function App(){
   

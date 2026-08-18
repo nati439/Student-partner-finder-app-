@@ -1,11 +1,12 @@
 import React from 'react'
-import {ProfileCards} from './ProfileCards';
+import ProfileCards from './ProfileCards';
+import TinderCard from 'react-tinder-card';
 export default function SwipeCard({person, lastSwipe, handleSwipe, setLastLeft, userId}) {
   return (
     <>
       <TinderCard
                         className="swipe" 
-                        key={person.username}
+                        key={person.id}
                         //change username to id
                         preventSwipe={["up", "down"]}
                         onSwipe={(dir) => handleSwipe(dir, person, userId)}
