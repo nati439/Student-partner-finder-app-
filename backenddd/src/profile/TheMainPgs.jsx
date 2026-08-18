@@ -172,8 +172,11 @@ export default function TheMainPgs(){
     // },[subimt])
     // console.log("pfp:", pfp);
 
-
-    localStorage.setItem("major", major);
+    useEffect( () => {
+        localStorage.setItem("major", major);
+    })
+      
+    
     return(
         <>
             {/* Full-screen background and central layout */}
@@ -405,7 +408,7 @@ export default function TheMainPgs(){
 
                             
 
-                            tinderfetch(payload) 
+   
 
                             async function readTinder() {
                                 const store = await tinderfetch(payload);
@@ -434,7 +437,7 @@ export default function TheMainPgs(){
                     </button>
                     <Link to="/TinderCards"><button>Next</button></Link>
                 </div>
-                <Link classame='text-red-500 absolute z-1 md:text-[40px] right-50 top-120 fixed bg-black p-4 rounded-full' to="/RealMain"> Next </Link>
+                <Link className='text-red-500 absolute z-1 md:text-[40px] right-50 top-120 fixed bg-black p-4 rounded-full' to="/RealMain"> Next </Link>
                 
             
 
