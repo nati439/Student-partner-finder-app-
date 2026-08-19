@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import TinderCard from "react-tinder-card"; 
 import './tinder.css';
 import { Link } from "react-router-dom";
-import { useLongPoll } from "./useLongPoll";
-import {Sendswipe} from './api/swipe';
-import { Getmatchingpeople } from "./api/swipe";
-import ProfileCards from "./cmp/ProfileCards"
-import SwipeCard from "./cmp/SwipeCard"
+import { useLongPoll } from "../hooks/useLongPoll";
+import {Sendswipe} from '../api/Swipe';
+import { Getmatchingpeople } from "../api/Swipe";
+import ProfileCards from "../cmp/ProfileCards"
+import SwipeCard from "../cmp/SwipeCard"
 import {IdContext} from '../cmp/AuthContext'
 const BASE_URL = import.meta.env.VITE_API_URL;
 function TinderCards() {

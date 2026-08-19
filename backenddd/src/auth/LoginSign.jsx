@@ -1,6 +1,6 @@
 //login and sigin 
 import { useEffect, useState } from "react";
-import lightoff from '../assets/lightoff';
+import lightoff from '../assets/lightoff.jpg';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React from 'react'
@@ -95,12 +95,22 @@ export default function LoginSign() {
                         placeholder="Username"
                         value={lusername}
                         onChange={(e) => Setlusername(e.target.value)}
+                        sx={{
+                            "& input": {
+                                color: "white",
+                            }
+                        }}
                     />
                     <Input
                         type="password"
                         placeholder="Password"
                         value={lpassword}
                         onChange={(e) => Setlpassword(e.target.value)}
+                         sx={{
+                            "& input": {
+                                color: "white",
+                            }
+                        }}
                     />
                     <button 
                         className="p-4 bg-green-600 hover:bg-green-700 rounded text-white"
@@ -119,12 +129,22 @@ export default function LoginSign() {
                         placeholder="Username"
                         value={susername}
                         onChange={(e) => Setsusername(e.target.value)}
+                        sx={{
+                            "& input": {
+                                color: "white",
+                            }
+                        }}
                     />
                     <Input
                         type="password"
                         placeholder="Password"
                         value={spassword}
                         onChange={(e) => Setspassword(e.target.value)}
+                        sx={{
+                            "& input": {
+                                color: "white",
+                            }
+                        }}
                     />
                     <button 
                         className="p-4 bg-green-600 hover:bg-green-700 rounded text-white"

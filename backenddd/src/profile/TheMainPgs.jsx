@@ -1,10 +1,10 @@
 
-import mainpg from './assets/mainbg.jpg';
-import whitebg from './assets/white.jpg';
-import { useState, useEffect } from 'react';
+import mainpg from '../assets/mainbg.jpg';
+import whitebg from '../assets/white.jpg';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
-import { tinderfetch } from './api/Profile';
-import { uploadpfps } from './api/Profile';
+import { tinderfetch } from '../api/Profile';
+import { uploadpfps } from '../api/Profile';
 //b/c tinderfetch is a export function. you can do this to use it in here
 import { IdContext } from '../cmp/AuthContext';
 

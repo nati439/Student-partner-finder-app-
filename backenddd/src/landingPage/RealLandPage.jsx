@@ -64,7 +64,7 @@ export default function RealLandPage() {
           <p className="mt-4 text-xl md:text-2xl text-white/90 max-w-xl mx-auto">
             The right study partner changes everything. Find someone to learn with, stay motivated, and succeed together.
           </p>
-          <Link to="/login" className="inline-block mt-15 px-8 py-4 bg-yellow-400 text-black font-bold text-xl rounded-lg hover:scale-105 transition-transform duration-300 shadow-md">
+          <Link to="/LoginSign" className="inline-block mt-15 px-8 py-4 bg-yellow-400 text-black font-bold text-xl rounded-lg hover:scale-105 transition-transform duration-300 shadow-md">
             Start
           </Link>
         </div>
