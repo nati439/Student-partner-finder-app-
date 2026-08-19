@@ -82,81 +82,105 @@ export default function LoginSign() {
      
      
     }
-  return (
-        <div className="relative w-full h-screen">
-                {/* Background */}
-                <img src={lightoff} alt="The background" className="w-full h-full object-cover" />
-    
-                {/* Login Section */}
-                <div className="absolute top-20 left-100 text-white flex flex-col space-y-4">
-                    <h1 className="text-4xl p-5">Login</h1>
-                    <Input
-                        type="text"
-                        placeholder="Username"
-                        value={lusername}
-                        onChange={(e) => Setlusername(e.target.value)}
-                        sx={{
-                            "& input": {
-                                color: "white",
-                            }
-                        }}
-                    />
-                    <Input
-                        type="password"
-                        placeholder="Password"
-                        value={lpassword}
-                        onChange={(e) => Setlpassword(e.target.value)}
-                         sx={{
-                            "& input": {
-                                color: "white",
-                            }
-                        }}
-                    />
-                    <button 
-                        className="p-4 bg-green-600 hover:bg-green-700 rounded text-white"
-                        type="button"
-                        onClick={handleCLick2}
-                    >
-                        Done
-                    </button>
-                </div>
-    
-                {/* Signup Section */}
-                <div className="absolute top-20 right-100 text-white flex flex-col space-y-4">
-                    <h1 className="text-4xl p-5">Create Account</h1>
-                    <Input
-                        type="text"
-                        placeholder="Username"
-                        value={susername}
-                        onChange={(e) => Setsusername(e.target.value)}
-                        sx={{
-                            "& input": {
-                                color: "white",
-                            }
-                        }}
-                    />
-                    <Input
-                        type="password"
-                        placeholder="Password"
-                        value={spassword}
-                        onChange={(e) => Setspassword(e.target.value)}
-                        sx={{
-                            "& input": {
-                                color: "white",
-                            }
-                        }}
-                    />
-                    <button 
-                        className="p-4 bg-green-600 hover:bg-green-700 rounded text-white"
-                        type="button"
-                        onClick={handleCLick}
-                    >
-                        Done
-                    </button>
-                </div>
-    
-                {/* Show login error if exists */}
-                {Ilogin()}
-            </div>
-  )
+return (
+    <div className="relative w-full h-screen">
+
+        {/* Background */}
+        <img
+            src={lightoff}
+            alt="The background"
+            className="w-full h-full object-cover"
+        />
+
+        {/* Login Section */}
+{/* Login Section */}
+        <div className="absolute top-16 left-[12%] text-white flex flex-col space-y-3 w-[260px]
+            max-[800px]:top-2 max-[800px]:left-1/2 max-[800px]:-translate-x-1/2 max-[800px]:w-[85%] max-[800px]:max-w-[220px] max-[800px]:space-y-1">
+            <h1 className="text-3xl p-3 max-[800px]:text-xl max-[800px]:p-1">
+                Login
+            </h1>
+
+            <Input
+                type="text"
+                placeholder="Username"
+                value={lusername}
+                onChange={(e) => Setlusername(e.target.value)}
+                sx={{
+                    "& input": {
+                        color: "white",
+                    }
+                }}
+            />
+
+            <Input
+                type="password"
+                placeholder="Password"
+                value={lpassword}
+                onChange={(e) => Setlpassword(e.target.value)}
+                sx={{
+                    "& input": {
+                        color: "white",
+                    }
+                }}
+            />
+
+            <button
+                className="p-3 bg-green-600 hover:bg-green-700 rounded text-white"
+                type="button"
+                onClick={handleCLick2}
+            >
+                Done
+            </button>
+        </div>
+
+
+        {/* Signup Section */}
+        {/* Signup Section */}
+        {/* Signup Section */}
+        {/* Signup Section */}
+        <div className="absolute top-16 right-[12%] text-white flex flex-col space-y-3 w-[260px]
+            max-[800px]:top-[190px] max-[800px]:left-1/2 max-[800px]:-translate-x-1/2 max-[800px]:right-auto max-[800px]:w-[85%] max-[800px]:max-w-[220px] max-[800px]:space-y-1">
+            <h1 className="text-3xl p-3 max-[800px]:text-xl max-[800px]:p-1">
+                Create Account
+            </h1>
+
+            <Input
+                type="text"
+                placeholder="Username"
+                value={susername}
+                onChange={(e) => Setsusername(e.target.value)}
+                sx={{
+                    "& input": {
+                        color: "white",
+                    }
+                }}
+            />
+
+            <Input
+                type="password"
+                placeholder="Password"
+                value={spassword}
+                onChange={(e) => Setspassword(e.target.value)}
+                sx={{
+                    "& input": {
+                        color: "white",
+                    }
+                }}
+            />
+
+            <button
+                className="p-3 bg-green-600 hover:bg-green-700 rounded text-white"
+                type="button"
+                onClick={handleCLick}
+            >
+                Done
+            </button>
+        </div>
+
+        {/* Show login error if exists */}
+        {Ilogin()}
+
+    </div>
+)
+
 }

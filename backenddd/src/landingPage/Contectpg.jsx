@@ -10,7 +10,7 @@ export default function ContactPage() {
         
         {/* Description */}
         <p className="text-lg md:text-xl text-gray-700 leading-relaxed space-y-4">
-          I’m a first-year college student and the creator of this app, built to help students find the right partners to study, build, and grow together 🎓🤝
+          I’m a second-year college student and the creator of this app, built to help students find the right partners to study, build, and grow together 🎓🤝
         </p>
         <p className="text-lg md:text-xl text-gray-700 leading-relaxed space-y-4 mt-4">
           This app is all about connecting students who want to collaborate and support each other.
