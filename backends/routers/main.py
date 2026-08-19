@@ -1,12 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-
-import auth
-import matching
-import swipes
-import users
-
+from routers import auth
+from routers import matching
+from routers import swipes
+from routers import users
 
 app = FastAPI()
 
@@ -22,13 +20,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 app.include_router(auth.router)
 app.include_router(matching.router)
 app.include_router(swipes.router)
 app.include_router(users.router)
-
 app.mount("/images", StaticFiles(directory="images"), name="images")
+
 # # main.py
 # from fastapi import FastAPI, Depends, status
 # from database import get_connection

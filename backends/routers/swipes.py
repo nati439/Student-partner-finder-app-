@@ -1,54 +1,53 @@
-# from fastapi import APIRouter
-# from fastapi.responses import JSONResponse
-# from typing import Dict
-# import asyncio
+from fastapi import APIRouter
+from fastapi.responses import JSONResponse
+from typing import Dict
+import asyncio
 
-# from database import get_db
-# from fastapi import Depends
-
-
-# router = APIRouter(tags=["swipes"])
-
-# user_queues: Dict[int, asyncio.Queue] = {}
+from routers.database import get_db
+from fastapi import Depends
 
 
-# @router.get("/poll/{user_id}")
-# async def long_poll(user_id: int):
-#     if user_id not in user_queues:
-#         user_queues[user_id] = asyncio.Queue()
+router = APIRouter(tags=["swipes"])
 
-#     try:
-#         message = await asyncio.wait_for(user_queues[user_id].get(), timeout=30)
-#         return JSONResponse({"status": "ok", "data": message})
-#     except asyncio.TimeoutError:
-#         return JSONResponse({"status": "timeout", "data": None})
+user_queues: Dict[int, asyncio.Queue] = {}
 
+@router.get("/poll/{user_id}")
+async def long_poll(user_id: int):
+    if user_id not in user_queues:
+        user_queues[user_id] = asyncio.Queue()
 
-# @router.post("/swipe")
-# async def swipe(payload: dict, db=Depends(get_db)):
-#     swiper_id = payload["swiper_id"]
-#     swiped_id = payload["swiped_id"]
-#     direction = payload["direction"]
+    try:
+        message = await asyncio.wait_for(user_queues[user_id].get(), timeout=30)
+        return JSONResponse({"status": "ok", "data": message})
+    except asyncio.TimeoutError:
+        return JSONResponse({"status": "timeout", "data": None})
 
-#     with db.cursor() as cursor:
-#         cursor.execute(
-#             "INSERT INTO swipes (swiper_id, swiped_id, direction) VALUES (%s, %s, %s)",
-#             (swiper_id, swiped_id, direction)
-#         )
-#         db.commit()
+@router.post("/swipe")
+async def swipe(payload: dict, db=Depends(get_db)):
+    swiper_id = payload["swiper_id"]
+    swiped_id = payload["swiped_id"]
+    direction = payload["direction"]
 
-#         cursor.execute(
-#             "SELECT * FROM swipes WHERE swiper_id = %s AND swiped_id = %s AND direction = 'right'",
-#             (swiped_id, swiper_id)
-#         )
-#         match = cursor.fetchone()
+    with db.cursor() as cursor:
+        cursor.execute(
+            "INSERT INTO swipes (swiper_id, swiped_id, direction) VALUES (%s, %s, %s)",
+            (swiper_id, swiped_id, direction)
+        )
+        db.commit()
 
-#     if match:
-#         for uid in [swiper_id, swiped_id]:
-#             if uid in user_queues:
-#                 await user_queues[uid].put({
-#                     "type": "match",
-#                     "with": swiped_id if uid == swiper_id else swiper_id
-#                 })
+        cursor.execute(
+            "SELECT * FROM swipes WHERE swiper_id = %s AND swiped_id = %s AND direction = 'right'",
+            (swiped_id, swiper_id)
+        )
+        match = cursor.fetchone()
 
-#     return {"status": "ok", "match": bool(match)}
+    if match:
+        for uid in [swiper_id, swiped_id]:
+            if uid in user_queues:
+                await user_queues[uid].put({
+                    "type": "match",
+                    "with": swiped_id if uid == swiper_id else swiper_id
+                    
+                })
+
+    return {"status": "ok", "match": bool(match)}

@@ -7,10 +7,10 @@ import { tinderfetch } from './api/Profile';
 import { uploadpfps } from './api/Profile';
 //b/c tinderfetch is a export function. you can do this to use it in here
 import { IdContext } from '../cmp/AuthContext';
-const userId = useContext(IdContext);
-const BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function TheMainPgs(){
-    
+    const userId = useContext(IdContext);
+    const BASE_URL = import.meta.env.VITE_API_URL;
     const [pfp, Setpfp] = useState("");
     const [username, Setusername] = useState("");
     const [college, Setcollege] = useState("");

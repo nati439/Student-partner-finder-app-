@@ -8,6 +8,7 @@ import { Getmatchingpeople } from "./api/swipe";
 import ProfileCards from "./cmp/ProfileCards"
 import SwipeCard from "./cmp/SwipeCard"
 import {IdContext} from '../cmp/AuthContext'
+const BASE_URL = import.meta.env.VITE_API_URL;
 function TinderCards() {
     const [people, setPeople] = useState([]);
     const [lastSwipe, setLastSwipe] = useState(null); 
@@ -18,7 +19,7 @@ function TinderCards() {
     const userId = useContext(IdContext); 
 
     // "Use my useLongPoll helper to keep checking the backend for a new message, and give me whatever message it finds."
-    const message = useLongPoll(`http://127.0.0.1:8000/poll/${userId}`);
+    const message = useLongPoll(`${BASE_URL}/polling/${userId}`);
 
     // when a match comes in, show it
     useEffect(() => {
