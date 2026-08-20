@@ -19,8 +19,8 @@ function TinderCards() {
     const userId = useContext(IdContext); 
 
     // "Use my useLongPoll helper to keep checking the backend for a new message, and give me whatever message it finds."
-    const message = useLongPoll(`${BASE_URL}/polling/${userId}`);
-
+    const message = useLongPoll(`${BASE_URL}/poll/${userId}`);
+   
     // when a match comes in, show it
     useEffect(() => {
         if (message?.type === "match") {
