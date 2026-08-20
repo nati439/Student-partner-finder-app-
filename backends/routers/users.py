@@ -12,10 +12,11 @@ router = APIRouter(tags=["users"])
 @router.post("/tinder", status_code=201)
 def save_profile(payload: FullPayload, db=Depends(get_db)):
     sql = """
-        INSERT INTO user_info (pfp, username, college, year, major, subject, note, day, `time`, contact)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO user_info (user_id, pfp, username, college, year, major, subject, note, day, `time`, contact)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
     values = (
+        payload.user_id,
         payload.user.pfp,
         payload.user.username,
         payload.user.college,
@@ -35,7 +36,6 @@ def save_profile(payload: FullPayload, db=Depends(get_db)):
         return {"message": "Created successfully"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"DB Error: {e}")
-
 
 @router.get("/retrieve")
 def retrieve_all(db=Depends(get_db)):

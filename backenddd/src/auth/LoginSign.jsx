@@ -4,9 +4,9 @@ import lightoff from '../assets/lightoff.jpg';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React from 'react'
-import {login} from '../api/Auth'
+import {login} from '../api/auth'
 import Input from "@mui/material/Input";
-import { signup } from "../api/Auth";
+import { signup } from "../api/auth";
 const BASE_URL = import.meta.env.VITE_API_URL;
 export default function LoginSign() {
     const [lusername, Setlusername] = useState("");
@@ -65,18 +65,25 @@ export default function LoginSign() {
         e.preventDefault(); //I explain it above 
 
         
-        try{
-            const data2 = await login(lusername, lpassword);
-               localStorage.setItem("user_id", data2.user_id);//////
-                localStorage.setItem("username", data2.username);///////
-                Setlogin(data2);    // ✅ store the response
-        }catch(err){
-            console.error(err)
-        } finally{
-               setLoginTried(true);
-        //without this the error will appear all the time.
-        }
-        
+        // try{
+        //     const data2 = await login(lusername, lpassword);
+        //        localStorage.setItem("user_id", data2.user_id);//////
+        //         localStorage.setItem("username", data2.username);///////
+        //         Setlogin(data2);    // ✅ store the response
+        // }catch(err){
+        //     console.error(err)
+        // } finally{
+        //        setLoginTried(true);
+        // //without this the error will appear all the time.
+        // }
+        const data2 = await login(lusername, lpassword);
+
+        console.log("LOGIN RESPONSE:", data2);
+
+        localStorage.setItem("user_id", data2.user_id);
+        localStorage.setItem("username", data2.username);
+
+        Setlogin(data2);
    
 
      

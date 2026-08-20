@@ -48,18 +48,32 @@ const BASE_URL = import.meta.env.VITE_API_URL;
                     
 
 
-        export async function tinderfetch(payload) {
-            try {
-                const res = await fetch("http://127.0.0.1:8000/tinder", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
+        // export async function tinderfetch(payload) {
+        //     try {
+        //         const res = await fetch("http://127.0.0.1:8000/tinder", {
+        //             method: "POST",
+        //             headers: { "Content-Type": "application/json" },
+        //             body: JSON.stringify(payload)
+        //         });
 
-                return await res.json();
-            } catch (err) {
-                return err;
-            }
+        //         return await res.json();
+        //     } catch (err) {
+        //         return err;
+        //     }
+        // }
+        export async function tinderfetch(payload) {
+            const res = await fetch("http://127.0.0.1:8000/tinder", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+
+            console.log("STATUS:", res.status);
+            console.log("RESPONSE:", data);
+
+            return data;
         }
 
 

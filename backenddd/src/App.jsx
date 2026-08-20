@@ -13,12 +13,19 @@ import {IdContext} from './cmp/AuthContext'
 
 function App(){
   
-  const [id, setids] = useState("")
-  useEffect(() => {
-    const ids = localStorage.getItem("user_id")
-    setids(ids)
-  }, [])
+  // const [id, setids] = useState("")
+  // useEffect(() => {
+  //   const ids = localStorage.getItem("user_id")
+  //   setids(ids)
+  // }, [])
   
+  const [id, setids] = useState("");
+
+    useEffect(() => {
+        const ids = localStorage.getItem("user_id");
+        console.log("APP USER ID:", ids);
+        setids(ids);
+  }, []);
 //   const message = useLongPoll("http://localhost:8000/poll");
 //   const [input, setInput] = useState("");
 

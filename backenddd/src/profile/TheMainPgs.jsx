@@ -10,6 +10,7 @@ import { IdContext } from '../cmp/AuthContext';
 
 export default function TheMainPgs(){
     const userId = useContext(IdContext);
+    console.log("MAIN PAGE USER ID:", userId);
     const BASE_URL = import.meta.env.VITE_API_URL;
     const [pfp, Setpfp] = useState("");
     const [username, Setusername] = useState("");
@@ -82,6 +83,11 @@ export default function TheMainPgs(){
 
                 const data = await res.json();
                 // console.log("📦 Data received:", data);
+                
+                if (!data) {
+                    console.log("No profile exists yet for user:", userId);
+                    return;
+                }
 
                 Setcollege(data.college);
                 Setcontact(data.contact);
@@ -98,7 +104,7 @@ export default function TheMainPgs(){
             }
 
             fetchdata();
-        }, []);
+        }, [userId]);
 
         //useeffect 
         // send fetch at /retrieve?major=something
@@ -395,17 +401,26 @@ return (
                         if (day.length > 0 || time.length > 0 || contact.length > 0) {
                             Settimes({ day, time, contact });
                         }
-
+                        
+                        console.log("USER ID:", userId);
                         const payload = {
+                            user_id: userId,
                             user: { pfp, username, college, year },
                             subject: { major, subject, note },
                             time: { day, time, contact },
                         };
 
+
+            
+
                         async function readTinder() {
+                            console.log("PAYLOAD BEING SENT:", payload);
+
                             const store = await tinderfetch(payload);
-                            console.log(store);
+
+                            console.log("RESPONSE:", store);
                         }
+
                         readTinder();
                     }}
                 >

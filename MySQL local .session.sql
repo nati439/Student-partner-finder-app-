@@ -78,3 +78,11 @@ CREATE TABLE users (
     hashed_password VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE user_info
+ADD COLUMN user_id INT,
+ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+SELECT * FROM users WHERE id = 2;
+
+SELECT * FROM user_info WHERE user_id = 2;

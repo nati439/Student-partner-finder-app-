@@ -40,6 +40,7 @@ class Time(BaseModel):
     contact: str 
 
 class FullPayload(BaseModel):
+    user_id: int
     user: UserPfp
     subject: Subject
     time: Time
