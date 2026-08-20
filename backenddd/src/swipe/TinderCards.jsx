@@ -75,6 +75,19 @@ function TinderCards() {
 
                 ))}
             </div>
+
+            {/* <div className="tinderCards__cardContainer">
+                {people.map((person) => (
+                    <SwipeCard 
+                        key={person.id || person.username} 
+                        person={person} 
+                        lastSwipe={lastSwipe} 
+                        handleSwipe={handleSwipe} 
+                        setLastLeft={setLastLeft} 
+                        userId={userId}
+                    />
+                ))}
+            </div> */}
         </div>
     );
 }

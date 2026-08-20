@@ -1,3 +1,25 @@
+// import React from 'react';
+// import ProfileCards from './ProfileCards';
+// import TinderCard from 'react-tinder-card';
+
+// export default function SwipeCard({ person, handleSwipe, setLastLeft, userId }) {
+//   return (
+//     <TinderCard
+//       className="swipe"
+//       key={person.id || person.username}
+//       preventSwipe={["up", "down"]}
+//       onSwipe={(dir) => handleSwipe(dir, person, userId)}
+//       onCardLeftScreen={() => setLastLeft(person.username)}
+//     >
+//       <div
+//         className="card"
+//         style={{ backgroundImage: `url(${person.pfp})` }}
+//       >
+//         <ProfileCards person={person} />
+//       </div>
+//     </TinderCard>
+//   );
+// }
 import React from 'react'
 import ProfileCards from './ProfileCards';
 import TinderCard from 'react-tinder-card';

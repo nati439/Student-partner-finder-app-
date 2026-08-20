@@ -1,0 +1,63 @@
+/* KILL THE GIANT GREEN/RED CIRCLES GLOBALLY */
+.check, .x {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* TINDER CARD STACK CONTAINER */
+.tinderCards__cardContainer {
+    position: relative !important;
+    width: 340px !important;
+    max-width: 85vw !important;
+    height: 320px !important;             /* Super compact height */
+    margin-top: -20px !important;          /* Pulls the card straight up into empty space */
+    margin-bottom: 20px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* STACK CARDS DIRECTLY ON TOP OF EACH OTHER */
+.swipe {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* CARD UI */
+.card {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 20px !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    padding: 16px !important; /* Slightly reduced padding for smaller card */
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.3) !important;
+}
+/* GRADIENT OVERLAY FOR TEXT READABILITY */
+.card::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 40% !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent) !important;
+    z-index: 1 !important;
+}
+
+.card__info {
+    position: relative !important;
+    z-index: 2 !important;
+    color: white !important;
+}
