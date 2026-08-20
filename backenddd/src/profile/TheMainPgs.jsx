@@ -32,9 +32,16 @@ export default function TheMainPgs(){
     //2. 
     const [showMsg, setShowMsg] = useState(false);
 
-   function uploadpfp(event){
+    async function uploadpfp(event) {
         const file = event.target.files[0];
-        uploadpfps(file)
+        if (!file) return;
+
+        try {
+            const url = await uploadpfps(file);
+            Setpfp(url);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
 
@@ -177,278 +184,243 @@ export default function TheMainPgs(){
     })
       
     
-    return(
-        <>
-            {/* Full-screen background and central layout */}
-            <div className="relative min-h-screen w-full bg-black text-white">
-                <img 
-                    src={mainpg} 
-                    className='absolute inset-0 h-full w-full object-cover' 
-                    alt="background"
-                />
+return (
+    <>
+        {/* Full-screen background and central layout */}
+        <div className="relative min-h-screen w-full bg-black text-white">
+            <img 
+                src={mainpg} 
+                className='absolute inset-0 h-full w-full object-cover' 
+                alt="background"
+            />
 
-                {/* Layout: on small screens stack vertically, on md+ show three columns (left, center, right) */}
-                <div className="relative z-10 max-w-[1200px] mx-auto px-4 py-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                        {/*grid-cols-1 makes the 3 boxs be one cols when under 760px. md:grid-cols-3 make 3 boxs be 3 cols above 760px  */}
+            {/* Layout: Grid restricted to 3 columns side by side */}
+            <div className="relative z-10 max-w-[1000px] mx-auto px-4 py-6">
+                <div className="grid grid-cols-3 gap-4 items-start">
 
-                        {/* LEFT SIDE CARD (stacks above center on small screens) */}
-                        <div className="order-1 md:order-1">
-                            <div className="w-full md:w-[360px] mx-auto space-y-6">
-                                {/* Major Dropdown */}
-                                <select
-                                    className='w-full px-4 py-3 text-lg
+                    {/* LEFT SIDE CARD */}
+                    <div>
+                        <div className="w-full space-y-3">
+                            {/* Major Dropdown */}
+                            <select
+                                className='w-full px-3 py-2 text-sm
+                                    bg-white/20 backdrop-blur-md
+                                    text-white rounded-lg outline-none
+                                    border border-white/30'
+                                value={major}
+                                onChange={(e) => Setmajor(e.target.value)}
+                            >
+                                <option value="">Select Engineering Field</option>
+                                <option className="text-black">Civil Engineering</option>
+                                <option className="text-black">Mechanical Engineering</option>
+                                <option className="text-black">Electrical Engineering</option>
+                                <option className="text-black">Computer Engineering</option>
+                                <option className="text-black">Software Engineering</option>
+                                <option className="text-black">Chemical Engineering</option>
+                                <option className="text-black">Aerospace Engineering</option>
+                                <option className="text-black">Biomedical Engineering</option>
+                                <option className="text-black">Industrial Engineering</option>
+                                <option className="text-black">Environmental Engineering</option>
+                            </select>
+
+                            {/* Specific Subject */}
+                            <input
+                                type="text"
+                                placeholder="Specific Subject (e.g. Circuits)"
+                                className='w-full px-3 py-2 text-sm
                                         bg-white/20 backdrop-blur-md
-                                        text-white rounded-lg outline-none
-                                        border border-white/30'
-                                    value={major}
-                                    onChange={(e) => Setmajor(e.target.value)}
-                                >
-                                    <option value="">Select Engineering Field</option>
-                                    <option className="text-black ">Civil Engineering</option>
-                                    <option className="text-black">Mechanical Engineering</option>
-                                    <option className="text-black">Electrical Engineering</option>
-                                    <option className="text-black">Computer Engineering</option>
-                                    <option className="text-black">Software Engineering</option>
-                                    <option className="text-black">Chemical Engineering</option>
-                                    <option className="text-black">Aerospace Engineering</option>
-                                    <option className="text-black">Biomedical Engineering</option>
-                                    <option className="text-black">Industrial Engineering</option>
-                                    <option className="text-black">Environmental Engineering</option>
-                                </select>
+                                        text-white placeholder-white/70
+                                        rounded-lg outline-none border border-white/30'
+                                value={subject}
+                                onChange={(e) => Setsubject(e.target.value)}
+                            />
 
-                                {/* Specific Subject */}
-                                <input
-                                    type="text"
-                                    placeholder="Specific Subject (Example: Circuits, Thermodynamics)"
-                                    className='w-full px-4 py-3 text-lg
-                                            bg-white/20 backdrop-blur-md
-                                            text-white placeholder-white/70
-                                            rounded-lg outline-none border border-white/30'
-                                    value={subject}
-                                    onChange={(e) => Setsubject(e.target.value)}
-                                />
-
-                                {/* Note Section */}
-                                <textarea
-                                    placeholder="Leave a note for more information about what you want to study..."
-                                    className='w-full h-[250px] px-4 py-3 text-lg
-                                            bg-white/20 backdrop-blur-md
-                                            text-white placeholder-white/70
-                                            rounded-lg outline-none border border-white/30 resize-none'
-                                    value={note}
-                                    onChange={(e) => Setnote(e.target.value)}
-                                />
-                            </div>
+                            {/* Note Section */}
+                            <textarea
+                                placeholder="Leave a note for study details..."
+                                className='w-full h-[120px] px-3 py-2 text-sm
+                                        bg-white/20 backdrop-blur-md
+                                        text-white placeholder-white/70
+                                        rounded-lg outline-none border border-white/30 resize-none'
+                                value={note}
+                                onChange={(e) => Setnote(e.target.value)}
+                            />
                         </div>
+                    </div>
 
-                        {/* CENTER CARD */}
-                        <div className="order-2 md:order-2 flex justify-center">
-                            <div className="relative bg-transparent">
-                                {/* White Card */}
+                    {/* CENTER CARD */}
+                    <div className="flex justify-center">
+                        <div className="relative bg-transparent w-full max-w-[280px]">
+                            {/* White Card */}
+                            <img 
+                                src={whitebg} 
+                                className='rounded-xl w-full h-[450px] object-cover' 
+                                alt="user info background" 
+                            />
+
+                            {/* Hidden File Input */}
+                            <input
+                                type="file"
+                                className="hidden"
+                                id="fileInput"
+                                onChange={uploadpfp}
+                            />
+
+                            {/* Upload Button */}
+                            <label 
+                                htmlFor="fileInput" 
+                                className="absolute left-1/2 -translate-x-1/2 top-4
+                                        px-3 py-1.5 bg-white/90 backdrop-blur-md 
+                                        hover:bg-white text-gray-800 
+                                        font-semibold rounded-lg shadow-md 
+                                        cursor-pointer text-xs whitespace-nowrap"
+                            >
+                                Upload Profile Picture
+                            </label>
+
+                            {/* Profile Image Preview */}
+                            {pfp && (
                                 <img 
-                                    src={whitebg} 
-                                    className='rounded-xl w-full max-w-[400px] h-auto md:h-[700px] object-cover' 
-                                    //w-full means 100% of the parent container It will stretch to fill 
-                                    //h-auto automatically scales so the image doesn't get warped 
-                                    
-                                    alt="user info background" 
+                                    src={pfp} 
+                                    alt="preview" 
+                                    className="absolute rounded-lg object-cover
+                                            left-1/2 -translate-x-1/2 top-14
+                                            w-[220px] h-[230px] border-2 border-green-500"
                                 />
+                            )}
 
-                                {/* Hidden File Input */}
+                            {/* Inputs container */}
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[85%] space-y-2">
                                 <input
-                                    type="file"
-                                    className="hidden"
-                                    id="fileInput"
-                                    onChange={uploadpfp}
-                                />
-
-                                {/* Upload Button */}
-                                <label 
-                                    htmlFor="fileInput" 
-                                    className="absolute left-1/2 -translate-x-1/2 top-8
-                                            px-4 py-2 bg-white/90 backdrop-blur-md 
-                                            hover:bg-white text-gray-800 
-                                            font-semibold rounded-xl shadow-md 
-                                            cursor-pointer text-sm"
-                                >
-                                    Upload Profile Picture
-                                </label> {/*We use label when we are working with file*/}
-
-                                {/* Profile Image Preview */}
-                                {pfp && ( //We run this if there is something inside pfp
-                                    <img 
-                                        src={pfp} 
-                                        alt="preview" 
-                                        className="absolute rounded-xl object-cover
-                                                left-1/2 -translate-x-1/2 top-20
-                                                w-[320px] md:w-[390px] h-[420px] md:h-[500px] border-2 border-green"
-                                    />
-                                )}
-
-                                {/* Inputs container (positioned near the bottom of the card) */}
-                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[320px] md:w-[360px] space-y-3">
-                                    <input
-                                        type='text'
-                                        placeholder='Username'
-                                        className='w-full px-4 py-2 
-                                                bg-black/20 backdrop-blur-md
-                                                text-white placeholder-white/70
-                                                rounded-lg outline-none border border-black/30
-                                                focus:border-black'
-                                        value={username}
-                                        onChange={(e) => Setusername(e.target.value)}
-                                        
-
-                                    />
-
-                                    <input
-                                        type='text'
-                                        placeholder='College / University'
-                                         className='w-full px-4 py-2 
-                                                bg-black/20 backdrop-blur-md
-                                                text-white placeholder-white/70
-                                                rounded-lg outline-none border border-black/30
-                                                focus:border-black'
-                                        value={college}
-                                        onChange={(e) => Setcollege(e.target.value)}
-                                    />
-
-                                    <input
-                                        type='text'
-                                        placeholder='Year (Freshman, etc)'
-                                         className='w-full px-4 py-2 
-                                                bg-black/20 backdrop-blur-md
-                                                text-white placeholder-white/70
-                                                rounded-lg outline-none border border-black/30
-                                                focus:border-black'
-                                        value={year}
-                                        onChange={(e) => Setyear(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* RIGHT SIDE CARD */}
-                        <div className="order-3 md:order-3">
-                            <div className="w-full md:w-[360px] mx-auto space-y-6">
-                                {/* Specific Day Available */}
-                                <input
-                                    type="text"
-                                    placeholder="Which day are you available?"
-                                    className='w-full px-4 py-3 text-lg
-                                            bg-white/20 backdrop-blur-md
+                                    type='text'
+                                    placeholder='Username'
+                                    className='w-full px-3 py-1.5 text-xs
+                                            bg-black/20 backdrop-blur-md
                                             text-white placeholder-white/70
-                                            rounded-lg outline-none border border-white/30'
-                                    value={day}
-                                    onChange={(e) => Setday(e.target.value)}
+                                            rounded-md outline-none border border-black/30
+                                            focus:border-black'
+                                    value={username}
+                                    onChange={(e) => Setusername(e.target.value)}
                                 />
 
-                                {/* Time Available */}
                                 <input
-                                    type="text"
-                                    placeholder="Time (e.g., 2 PM - 5 PM)"
-                                    className='w-full px-4 py-3 text-lg
-                                            bg-white/20 backdrop-blur-md
+                                    type='text'
+                                    placeholder='College / University'
+                                    className='w-full px-3 py-1.5 text-xs
+                                            bg-black/20 backdrop-blur-md
                                             text-white placeholder-white/70
-                                            rounded-lg outline-none border border-white/30'
-                                    value={time}
-                                    onChange={(e) => Settime(e.target.value)}
+                                            rounded-md outline-none border border-black/30
+                                            focus:border-black'
+                                    value={college}
+                                    onChange={(e) => Setcollege(e.target.value)}
                                 />
 
-                                {/* Contact Info */}
                                 <input
-                                    type="text"
-                                    placeholder="Phone / Email / Social Media"
-                                    className='w-full px-4 py-3 text-lg
-                                            bg-white/20 backdrop-blur-md
+                                    type='text'
+                                    placeholder='Year (Freshman, etc)'
+                                    className='w-full px-3 py-1.5 text-xs
+                                            bg-black/20 backdrop-blur-md
                                             text-white placeholder-white/70
-                                            rounded-lg outline-none border border-white/30'
-                                    value={contact}
-                                    onChange={(e) => Setcontact(e.target.value)}
+                                            rounded-md outline-none border border-black/30
+                                            focus:border-black'
+                                    value={year}
+                                    onChange={(e) => Setyear(e.target.value)}
                                 />
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                {/* Submit button: responsive placement */}
-                {/* On small screens the button is centered near the bottom; on md+ placed at bottom-right */}
-                <div className="fixed inset-x-0 right-40 bottom-6 flex justify-center md:justify-end md:pr-10 z-20"> 
-                    {/*inset-x-0 means right-0 and left-0 so it's fully stretch on left and right side*/}
-                    {/*md means this rule only apply to medium and large screen*/}
-                   <button
-                        onClick={() => {
 
-                            localStorage.setItem("username", username);
-                            localStorage.setItem("college", college);
-                            localStorage.setItem("year", year);
+                    {/* RIGHT SIDE CARD */}
+                    <div>
+                        <div className="w-full space-y-3">
+                            {/* Specific Day Available */}
+                            <input
+                                type="text"
+                                placeholder="Which day are you available?"
+                                className='w-full px-3 py-2 text-sm
+                                        bg-white/20 backdrop-blur-md
+                                        text-white placeholder-white/70
+                                        rounded-lg outline-none border border-white/30'
+                                value={day}
+                                onChange={(e) => Setday(e.target.value)}
+                            />
 
+                            {/* Time Available */}
+                            <input
+                                type="text"
+                                placeholder="Time (e.g., 2 PM - 5 PM)"
+                                className='w-full px-3 py-2 text-sm
+                                        bg-white/20 backdrop-blur-md
+                                        text-white placeholder-white/70
+                                        rounded-lg outline-none border border-white/30'
+                                value={time}
+                                onChange={(e) => Settime(e.target.value)}
+                            />
 
-                            dmessege();
-
-                            if (pfp.length > 0 || username.length > 0 || college.length > 0 || year.length > 0) {
-                            Setuser({ pfp, username, college, year });
-                            }
-
-                            if (major.length > 0 || subject.length > 0 || note.length > 0) {
-                            Setsubjects({ major, subject, note });
-                            }
-
-                            if (day.length > 0 || time.length > 0 || contact.length > 0) {
-                            Settimes({ day, time, contact });
-                            }
-
-                            //payload --> helper function (profile.js) --> get responses it worked
-                            const payload = {
-                                user: { pfp, username, college, year },
-                                subject: { major, subject, note },
-                                time: { day, time, contact },
-                            };
-
-                            
-
-   
-
-                            async function readTinder() {
-                                const store = await tinderfetch(payload);
-
-                                console.log(store);
-                                //the message you're seeing in console.log(store) is the message/data that your backend wrote in its return
-                            }
-                                                            
-                            
-
-
-
-                            // fetch("http://127.0.0.1:8000/tinder", {
-                            // method: "POST",
-                            // headers: { "Content-Type": "application/json" },
-                            // body: JSON.stringify(payload),
-                            // })
-                            // .then(res => res.json())
-                            // .then(data => console.log("Server response:", data))
-                            // .catch(err => console.error(err));
-                           
-
-                        }}
-                        >
-                        Save
-                    </button>
-                    <Link to="/TinderCards"><button>Next</button></Link>
-                </div>
-                <Link className='text-red-500 absolute z-1 md:text-[40px] right-50 top-120 fixed bg-black p-4 rounded-full' to="/RealMain"> Next </Link>
-                
-            
-
-                {/* Message area: responsive position */}
-                <div className='fixed right-10 -translate-x-1/2 bottom-24 md:bottom-32 z-30'>
-                    <div className='text-green-500 text-[18px] md:text-[20px]'>
-                        {showMsg && <h1>Your profile has been updated</h1>} {/*renders only if it's true*/}
+                            {/* Contact Info */}
+                            <input
+                                type="text"
+                                placeholder="Phone / Email / Social Media"
+                                className='w-full px-3 py-2 text-sm
+                                        bg-white/20 backdrop-blur-md
+                                        text-white placeholder-white/70
+                                        rounded-lg outline-none border border-white/30'
+                                value={contact}
+                                onChange={(e) => Setcontact(e.target.value)}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </>
-    )
-}
+            
+            {/* Submit button section */}
+            <div className="fixed right-8 bottom-6 flex items-center gap-3 z-20"> 
+                <button
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm"
+                    onClick={() => {
+                        localStorage.setItem("username", username);
+                        localStorage.setItem("college", college);
+                        localStorage.setItem("year", year);
 
+                        dmessege();
+
+                        if (pfp.length > 0 || username.length > 0 || college.length > 0 || year.length > 0) {
+                            Setuser({ pfp, username, college, year });
+                        }
+
+                        if (major.length > 0 || subject.length > 0 || note.length > 0) {
+                            Setsubjects({ major, subject, note });
+                        }
+
+                        if (day.length > 0 || time.length > 0 || contact.length > 0) {
+                            Settimes({ day, time, contact });
+                        }
+
+                        const payload = {
+                            user: { pfp, username, college, year },
+                            subject: { major, subject, note },
+                            time: { day, time, contact },
+                        };
+
+                        async function readTinder() {
+                            const store = await tinderfetch(payload);
+                            console.log(store);
+                        }
+                        readTinder();
+                    }}
+                >
+                    Save
+                </button>
+                <Link to="/TinderCards" className="px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white font-medium rounded-lg text-sm">Next</Link>
+            </div>
+
+            {/* Message area */}
+            <div className='fixed right-8 bottom-16 z-30'>
+                <div className='text-green-400 text-sm'>
+                    {showMsg && <span>Your profile has been updated</span>}
+                </div>
+            </div>
+        </div>
+    </>
+)
+}

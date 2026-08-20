@@ -12,29 +12,23 @@ const BASE_URL = import.meta.env.VITE_API_URL;
         //1. if not null do this - i want it to go away after 5 seconds - click --> not null --> messege
         //2. 
        
-       export function uploadpfps(file){
-            if (!file) return;
-            if (!file.type.startsWith("image/")) return;
-    
+            // api/profile.js
+        export async function uploadpfps(file) {
+            if (!file) throw new Error("No file provided");
+            if (!file.type.startsWith("image/")) throw new Error("File must be an image");
+
             const formData = new FormData();
-            //Think of this as an empty box that can hold data.
             formData.append("file", file);
-        
-            //You’re adding something into the box. the key and the actual file object
-    
-            fetch("http://127.0.0.1:8000/upload/", {
-            //change the url into the function you created 
-            
+
+            const res = await fetch(`${BASE_URL}/upload/`, {
                 method: "POST",
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                // console.log("Permanent URL:", data.url);
-                const saveurl = data.url// ✅ store the permanent URL. If you add pic from your laptop it only exits there but other can't see it unless it turn to url
-                return saveurl
-            })
-            .catch(err => console.error("Upload failed:", err));
+                body: formData,
+            });
+
+            if (!res.ok) throw new Error("Upload failed");
+
+            const data = await res.json();
+            return data.url;
         }
         
                     //helper function to bring user info back to frontend so it can be shown in profile place

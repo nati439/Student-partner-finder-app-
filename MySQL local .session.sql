@@ -26,7 +26,7 @@ FLUSH PRIVILEGES;
 
 SELECT * FROM user_info;
 
-TRUNCATE TABLE user_info;
+TRUNCATE TABLE users;
 
 INSERT INTO user_info 
 (pfp, username, college, year, major, subject, note, day, `time`, contact)
@@ -57,3 +57,24 @@ CREATE table swipes (
 -- goal is when user click yes or no don't show that user again even after log off
 -- backend --> 
 -- frontend --> 
+
+show databases;
+
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM information_schema.TABLES
+WHERE TABLE_NAME = 'swipes';
+
+use nati;
+show tables;
+
+select DATABASE();
+
+SHOW TABLES FROM nati;
+DROP TABLE users;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(25) NOT NULL UNIQUE,
+    hashed_password VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
