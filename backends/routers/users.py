@@ -14,6 +14,17 @@ def save_profile(payload: FullPayload, db=Depends(get_db)):
     sql = """
         INSERT INTO user_info (user_id, pfp, username, college, year, major, subject, note, day, `time`, contact)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        ON DUPLICATE KEY UPDATE
+            pfp = VALUES(pfp),
+            username = VALUES(username),
+            college = VALUES(college),
+            year = VALUES(year),
+            major = VALUES(major),
+            subject = VALUES(subject),
+            note = VALUES(note),
+            day = VALUES(day),
+            `time` = VALUES(`time`),
+            contact = VALUES(contact)
     """
     values = (
         payload.user_id,
@@ -33,7 +44,7 @@ def save_profile(payload: FullPayload, db=Depends(get_db)):
         with db.cursor() as cursor:
             cursor.execute(sql, values)
             db.commit()
-        return {"message": "Created successfully"}
+        return {"message": "Saved successfully"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"DB Error: {e}")
 
@@ -47,11 +58,10 @@ def retrieve_all(db=Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@router.get("/users/{name}")
-def get_user(name: str, db=Depends(get_db)):
+@router.get("/users/{user_id}")
+def get_user(user_id: int, db=Depends(get_db)):
     with db.cursor(pymysql.cursors.DictCursor) as cursor:
-        cursor.execute("SELECT * FROM user_info WHERE username = %s", (name,))
+        cursor.execute("SELECT * FROM user_info WHERE user_id = %s", (user_id,))
         result = cursor.fetchone()
     return result
 

@@ -45,52 +45,65 @@ function TinderCards() {
     }, []);
 
     async function handleSwipe(direction, person, userId) {
-    setLastSwipe({ username: person.username, direction });
+        setLastSwipe({ username: person.username, direction });
+        setTimeout(() => setLastSwipe(null), 1000);
+
         try {
             await Sendswipe(direction, person, userId);
         } catch (err) {
             console.error(err);
         }
     }
-    
+    function handleCardLeftScreen(username) {
+        setLastLeft(username);
+        setPeople((prev) => prev.filter((p) => p.username !== username));
+    }
 
+
+    const [matchHistory, setMatchHistory] = useState([]);
+
+        useEffect(() => {
+            if (message?.type === "match") {
+                setMatchNotif(`You matched with user ${message.with}!`);
+                setMatchHistory((prev) => [...prev, message.with]);
+                setTimeout(() => setMatchNotif(null), 4000);
+            }
+        }, [message]);
     return (
         <div className="tinderCards">
+            {matchHistory.length > 0 && (
+                <div className="match-history">
+                    <h4>Your Matches</h4>
+                    <ul>
+                        {matchHistory.map((id, index) => (
+                            <li key={index}>Matched with user {id}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
-            {/* match notification */}
             {matchNotif && (
-                <div style={{
-                    position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)",
-                    background: "green", color: "white", padding: "16px 32px",
-                    borderRadius: "12px", fontSize: "20px", zIndex: 999
-                }}>
+                <div style={{ /* ...unchanged... */ }}>
                     {matchNotif}
                 </div>
             )}
 
+            {lastSwipe?.direction === "left" && (
+                <div className="side-icon side-icon-left">❌</div>
+            )}
+            {lastSwipe?.direction === "right" && (
+                <div className="side-icon side-icon-right">✔️</div>
+            )}
+
             <div className="tinderCards__cardContainer">
                 {people.map((person) => (
-                    
-                        <div key={person.id}>  <SwipeCard person={person}  lastSwipe={lastSwipe} handleSwipe={handleSwipe} setLastLeft={setLastLeft} userId={userId}/></div>
-
+                    <div key={person.id}>
+                        <SwipeCard person={person} handleSwipe={handleSwipe} setLastLeft={handleCardLeftScreen} userId={userId} />
+                    </div>
                 ))}
             </div>
-
-            {/* <div className="tinderCards__cardContainer">
-                {people.map((person) => (
-                    <SwipeCard 
-                        key={person.id || person.username} 
-                        person={person} 
-                        lastSwipe={lastSwipe} 
-                        handleSwipe={handleSwipe} 
-                        setLastLeft={setLastLeft} 
-                        userId={userId}
-                    />
-                ))}
-            </div> */}
         </div>
     );
 }
-
 export default TinderCards;
 

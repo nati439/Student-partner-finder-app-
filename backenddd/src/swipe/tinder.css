@@ -1,9 +1,20 @@
 /* KILL THE GIANT GREEN/RED CIRCLES GLOBALLY */
 .check, .x {
-    display: none !important;
-    visibility: hidden !important;
-    width: 0 !important;
-    height: 0 !important;
+    position: absolute;
+    top: 30px;
+    font-size: 60px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.check {
+    right: 20px;
+    color: #4ade80;
+}
+
+.x {
+    left: 20px;
+    color: #f87171;
 }
 
 /* TINDER CARD STACK CONTAINER */
@@ -11,11 +22,12 @@
     position: relative !important;
     width: 340px !important;
     max-width: 85vw !important;
-    height: 320px !important;             /* Super compact height */
-    margin-top: -20px !important;          /* Pulls the card straight up into empty space */
+    height: 320px !important;
+    margin-top: -20px !important;
     margin-bottom: 20px !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    overflow: hidden !important;
 }
 
 /* STACK CARDS DIRECTLY ON TOP OF EACH OTHER */
@@ -60,4 +72,21 @@
     position: relative !important;
     z-index: 2 !important;
     color: white !important;
+}
+
+.side-icon {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px;
+    z-index: 999;
+    pointer-events: none;
+}
+
+.side-icon-left {
+    left: 20px;
+}
+
+.side-icon-right {
+    right: 20px;
 }
