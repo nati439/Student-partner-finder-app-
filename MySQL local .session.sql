@@ -26,7 +26,7 @@ FLUSH PRIVILEGES;
 
 SELECT * FROM user_info;
 
-TRUNCATE TABLE users;
+TRUNCATE TABLE swipes;
 
 INSERT INTO user_info 
 (pfp, username, college, year, major, subject, note, day, `time`, contact)
@@ -86,3 +86,8 @@ ADD FOREIGN KEY (user_id) REFERENCES users(id);
 SELECT * FROM users WHERE id = 2;
 
 SELECT * FROM user_info WHERE user_id = 2;
+
+ALTER TABLE user_info ADD UNIQUE (user_id);
+
+SELECT * FROM swipes;
+

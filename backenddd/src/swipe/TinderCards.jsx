@@ -35,7 +35,7 @@ function TinderCards() {
 
         async function dbback() {
             try {
-                const data = await Getmatchingpeople(major);
+                const data = await Getmatchingpeople(major, userId);
                 setPeople(data);
             } catch (err) {
                 console.error(err);
